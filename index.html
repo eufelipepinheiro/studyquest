@@ -5,222 +5,161 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>StudyQuest — Planner de estudos</title>
 <style>
-:root { color-scheme: light dark; --bg: light-dark(#f5f6fb,#10121b); --panel: light-dark(#ffffff,#191c29); --panel2: light-dark(#f7f7fc,#202436); --text: light-dark(#202238,#f4f5ff); --muted: light-dark(#777b91,#a4a8bd); --border: light-dark(#e7e8f1,#303449); --purple: #8b6cff; --purple2: #6c4ee6; --green: #35c99a; --orange: #ffb66b; --blue: #69a8ff; }
-* { box-sizing:border-box; }
-body { margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background:var(--bg); color:var(--text); }
-.app { min-height:100vh; background:var(--bg); }
-.layout { display:grid; grid-template-columns:240px minmax(0,1fr); min-height:100vh; }
-aside { padding:26px 16px; border-right:1px solid var(--border); background:var(--panel); display:flex; flex-direction:column; gap:28px; }
-.brand { display:flex; align-items:center; gap:10px; padding:0 8px; font-weight:800; font-size:19px; letter-spacing:-.6px; }
-.logo { width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#a48aff,#7054ef);display:grid;place-items:center;color:white;font-size:18px;box-shadow:0 6px 16px #8064f344; }
-.eyebrow { font-size:10px; letter-spacing:1.5px; color:var(--muted); font-weight:800; padding:0 10px; }
-.nav { display:grid; gap:5px; }
-.nav button { border:0;background:transparent;color:var(--muted);padding:11px 12px;border-radius:11px;text-align:left;font:600 13px inherit;display:flex;align-items:center;gap:11px;cursor:pointer; }
-.nav button.active,.nav button:hover { color:var(--text); background:light-dark(#f0edff,#29233f); }
-.nav button.active { box-shadow:inset 3px 0 var(--purple); }
-.nav .ico { width:20px;text-align:center;font-size:16px; }
-.side-bottom { margin-top:auto; background:var(--panel2); padding:15px; border:1px solid var(--border); border-radius:15px; }
-.side-bottom strong { font-size:13px; display:block;margin-bottom:6px; }
-.side-bottom p { color:var(--muted);font-size:11px;line-height:1.5;margin:0 0 12px; }
-main { padding:30px clamp(18px,3.5vw,48px) 42px; max-width:1500px; width:100%; margin:0 auto; }
-.topbar { display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px; }
-.greeting small { color:var(--muted);font-size:12px; }
-h1 { margin:5px 0 0;font-size:clamp(24px,3vw,32px);letter-spacing:-1.2px; }
-.top-actions { display:flex;gap:9px;align-items:center; }
-.icon-btn,.btn { border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:11px;padding:10px 13px;font-weight:700;font-size:12px;cursor:pointer; }
-.btn.primary { background:var(--purple2);border-color:var(--purple2);color:white;box-shadow:0 5px 15px #7555e52b; }
-.btn:hover,.icon-btn:hover { transform:translateY(-1px); }
-.hero { display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:20px; }
-.welcome { border-radius:19px;padding:24px 25px;background:linear-gradient(115deg,#272144,#3b2c6b 70%,#5541a2);color:#fff;position:relative;overflow:hidden;min-height:185px; }
-.welcome:after { content:"✦";position:absolute;right:25px;top:-30px;font-size:150px;color:#ffffff12;transform:rotate(15deg); }
-.welcome .tag { display:inline-flex;align-items:center;gap:6px;background:#ffffff1a;border:1px solid #ffffff20;padding:6px 9px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:.4px; }
-.welcome h2 { font-size:25px;letter-spacing:-.7px;margin:15px 0 7px;max-width:420px; }
-.welcome p { margin:0;color:#d4cdef;font-size:12px;line-height:1.6;max-width:440px; }
-.xp-row { display:flex;align-items:center;gap:12px;margin-top:18px;max-width:370px; }
-.xp-track { height:7px;background:#ffffff30;border-radius:20px;flex:1;overflow:hidden; }
-.xp-fill { width:42%;height:100%;background:#a7f1d6;border-radius:20px;transition:width .25s; }
-.xp-label { font-size:10px;color:#e7e1ff;white-space:nowrap; }
-.stats { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
-.stat { background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:17px;display:flex;flex-direction:column;justify-content:space-between;min-height:86px; }
-.stat-head { display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px;gap:5px; }
-.stat-icon { width:29px;height:29px;display:grid;place-items:center;background:var(--panel2);border-radius:9px;font-size:15px; }
-.stat strong { font-size:24px;letter-spacing:-.8px;margin-top:10px; }
-.stat strong span { font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0; }
-.section-head { display:flex;justify-content:space-between;align-items:center;gap:12px;margin:26px 0 13px; }
-.section-head h2 { font-size:17px;letter-spacing:-.4px;margin:0; }
-.section-head p { margin:4px 0 0;color:var(--muted);font-size:11px; }
-.week-switch { display:flex;gap:6px;align-items:center; }
-.week-switch button { border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:9px;padding:7px 10px;cursor:pointer; }
-.week-label { color:var(--muted);font-size:11px;padding:0 5px; }
-.week { display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px; }
-.day { border:1px solid var(--border);border-radius:14px;background:var(--panel);padding:13px 8px 11px;text-align:center;cursor:pointer;transition:.15s; }
-.day:hover { border-color:var(--purple); }
-.day.selected { background:light-dark(#eee9ff,#2b2444);border-color:var(--purple);box-shadow:0 0 0 1px var(--purple) inset; }
-.day .dow { font-size:10px;color:var(--muted);font-weight:800;text-transform:uppercase; }
-.day .date { display:grid;place-items:center;margin:8px auto;width:31px;height:31px;border-radius:10px;font-size:13px;font-weight:800; }
-.day.selected .date { background:var(--purple2);color:white; }
-.day .mini { height:4px;border-radius:10px;background:var(--border);margin-top:10px;overflow:hidden; }
-.day .mini span { display:block;height:100%;width:0;background:var(--green);border-radius:10px; }
-.content-grid { display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.8fr);gap:16px;margin-top:20px; }
-.card { background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:18px;min-width:0; }
-.card-title { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px; }
-.card-title h3 { margin:0;font-size:14px; }
-.card-title span { font-size:10px;color:var(--muted); }
-.timeline { display:grid;gap:9px; }
-.task { display:grid;grid-template-columns:60px 4px minmax(0,1fr) auto;align-items:center;gap:11px;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--panel);transition:.15s; }
-.task.done { opacity:.68;background:var(--panel2); }
-.task.done .task-name { text-decoration:line-through;color:var(--muted); }
-.time { font-size:10px;color:var(--muted);font-weight:800;line-height:1.5; }
-.colorbar { width:4px;height:37px;border-radius:5px;background:var(--purple); }
-.task-info { min-width:0; }
-.task-name { font-size:12px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-.task-meta { font-size:10px;color:var(--muted);margin-top:5px;display:flex;gap:7px;align-items:center;flex-wrap:wrap; }
-.pill { border-radius:6px;padding:3px 6px;background:light-dark(#f0edff,#302747);color:var(--purple);font-size:9px;font-weight:800; }
-.task input { appearance:none;width:20px;height:20px;border:1.5px solid var(--border);border-radius:7px;cursor:pointer;position:relative;margin:0; }
-.task input:checked { background:var(--green);border-color:var(--green); }
-.task input:checked:after { content:'✓';position:absolute;inset:0;display:grid;place-items:center;color:#102b25;font-weight:900;font-size:13px; }
-.empty { text-align:center;padding:30px 12px;color:var(--muted);font-size:12px; }
-.progress-ring { display:flex;align-items:center;gap:17px;padding:8px 0 17px; }
-.ring { width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--purple) var(--progress,0%),var(--border) 0);position:relative;flex-shrink:0; }
-.ring:before { content:"";position:absolute;inset:8px;border-radius:50%;background:var(--panel); }
-.ring span { position:relative;font-size:18px;font-weight:850; }
-.progress-copy strong { display:block;font-size:13px;margin-bottom:5px; }
-.progress-copy p { margin:0;color:var(--muted);font-size:11px;line-height:1.5; }
-.divider { border:0;border-top:1px solid var(--border);margin:5px 0 15px; }
-.break-box { display:flex;align-items:center;gap:12px;padding:13px;border-radius:12px;background:light-dark(#fff5e8,#34281f);border:1px solid light-dark(#ffead2,#4a3729); }
-.break-icon { width:37px;height:37px;border-radius:11px;background:light-dark(#ffe4bf,#4d3626);display:grid;place-items:center;font-size:19px; }
-.break-box strong { font-size:12px;display:block; }
-.break-box p { margin:4px 0 0;font-size:10px;color:var(--muted);line-height:1.4; }
-.timer { display:flex;align-items:center;justify-content:space-between;margin-top:14px;gap:10px; }
-.timer-value { font-size:23px;font-weight:850;letter-spacing:1px;font-variant-numeric:tabular-nums; }
-.focus-settings { display:flex;align-items:center;gap:7px;margin-top:8px;flex-wrap:wrap; }
-.focus-settings label { color:var(--muted);font-size:10px; }
-.focus-settings input { width:68px;padding:7px;border:1px solid var(--border);border-radius:8px;background:var(--panel2);color:var(--text);font:inherit;font-size:11px; }
-.timer button { border:0;border-radius:9px;background:var(--panel2);color:var(--text);padding:9px 12px;font-size:11px;font-weight:800;cursor:pointer; }
-.tip { margin-top:15px;border:1px dashed var(--border);padding:12px;border-radius:12px;color:var(--muted);font-size:11px;line-height:1.6; }
-.tip b { color:var(--text); }
-.modal-backdrop { position:fixed;inset:0;background:#09091499;display:none;align-items:center;justify-content:center;padding:18px;z-index:10; }
-.modal-backdrop.open { display:flex; }
-.modal { width:min(440px,100%);background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;box-shadow:0 20px 80px #0004; }
-.modal h2 { font-size:19px;margin:0 0 17px; }
-.field { display:grid;gap:6px;margin-bottom:13px; }
-.field label { font-size:11px;color:var(--muted);font-weight:750; }
-.field input,.field select { width:100%;padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--panel2);color:var(--text);font:inherit;font-size:12px; }
-.form-row { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
-.modal-actions { display:flex;justify-content:flex-end;gap:8px;margin-top:18px; }
-.toast { position:fixed;bottom:20px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:var(--text);color:var(--bg);padding:11px 16px;border-radius:12px;font-size:12px;font-weight:750;transition:.2s;z-index:20; }
-.toast.show { opacity:1;transform:translate(-50%,0); }
-@media(max-width:1000px){.layout{grid-template-columns:76px minmax(0,1fr)}aside{padding:24px 10px;align-items:center}.brand{padding:0}.brand .brand-name,.eyebrow,.nav .nav-label,.side-bottom{display:none}.nav{width:100%}.nav button{justify-content:center;padding:12px 4px}.nav .ico{font-size:18px}.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(4,1fr)}.stat{min-height:95px}.content-grid{grid-template-columns:1fr}}
-@media(max-width:650px){.layout{display:block}aside{display:none}main{padding:22px 14px 32px}.topbar{align-items:flex-start}.top-actions .icon-btn{display:none}.top-actions .btn{padding:10px}.welcome{padding:20px;min-height:175px}.welcome h2{font-size:22px}.stats{grid-template-columns:repeat(2,1fr)}.week{gap:5px}.day{padding:10px 2px}.day .dow{font-size:9px}.day .date{width:28px;height:28px}.section-head{align-items:flex-start}.week-label{display:none}.content-grid{gap:12px}.task{grid-template-columns:49px 4px minmax(0,1fr) 20px;gap:8px;padding:10px}.task-name{font-size:11px}.time{font-size:9px}.card{padding:14px}.form-row{grid-template-columns:1fr 1fr}}
+:root{color-scheme:light dark;--bg:light-dark(#f5f6fb,#10121b);--panel:light-dark(#fff,#191c29);--panel2:light-dark(#f7f7fc,#202436);--text:light-dark(#202238,#f4f5ff);--muted:light-dark(#777b91,#a4a8bd);--border:light-dark(#e7e8f1,#303449);--purple:#8b6cff;--purple2:#6c4ee6;--green:#35c99a;--orange:#ffb66b;--blue:#69a8ff}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}button,input,select{font:inherit}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:100vh}aside{padding:25px 15px;border-right:1px solid var(--border);background:var(--panel);display:flex;flex-direction:column;gap:25px}.brand{font-size:20px;font-weight:850;padding:0 8px}.logo{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#a48aff,#7054ef);color:white;margin-right:8px}.eyebrow{font-size:10px;letter-spacing:1.4px;color:var(--muted);font-weight:800;padding:0 10px}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:var(--muted);padding:11px;border-radius:10px;text-align:left;cursor:pointer}.nav button.active,.nav button:hover{color:var(--text);background:light-dark(#f0edff,#29233f)}.side-bottom{margin-top:auto;background:var(--panel2);padding:14px;border:1px solid var(--border);border-radius:14px;font-size:12px}.side-bottom p{color:var(--muted);line-height:1.5}main{padding:28px clamp(16px,3.5vw,45px);max-width:1450px;width:100%;margin:auto}.topbar,.section-head,.card-title,.timer,.top-actions{display:flex;align-items:center;justify-content:space-between;gap:12px}.topbar{margin-bottom:25px}.greeting small,.section-head p{color:var(--muted);font-size:11px}h1{font-size:clamp(24px,3vw,32px);margin:5px 0}button{cursor:pointer}.btn,.icon-btn{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:10px;padding:10px 13px;font-size:12px;font-weight:750}.btn.primary{background:var(--purple2);border-color:var(--purple2);color:white}.hero{display:grid;grid-template-columns:1.4fr 1fr;gap:15px;margin-bottom:20px}.welcome{border-radius:18px;padding:23px;background:linear-gradient(115deg,#272144,#3b2c6b 70%,#5541a2);color:#fff;min-height:180px}.tag{font-size:10px;font-weight:800;background:#ffffff1c;border-radius:20px;padding:6px 9px}.welcome h2{font-size:24px;margin:18px 0 8px}.welcome p{color:#d4cdef;font-size:12px;line-height:1.6}.xp-row{display:flex;align-items:center;gap:10px;margin-top:17px}.xp-track{height:7px;background:#ffffff30;border-radius:20px;flex:1;overflow:hidden}.xp-fill{height:100%;background:#a7f1d6;width:0}.xp-label{font-size:10px;white-space:nowrap}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.stat,.card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px}.stat{min-height:85px}.stat-head{font-size:11px;color:var(--muted)}.stat strong{display:block;font-size:23px;margin-top:12px}.stat strong span{font-size:11px;color:var(--muted);font-weight:500}.section-head{margin:25px 0 12px}.section-head h2{font-size:17px;margin:0}.section-head p{margin:4px 0}.week-switch{display:flex;align-items:center;gap:6px}.week-switch button{border:1px solid var(--border);background:var(--panel);color:var(--text);border-radius:8px;padding:7px 11px}.week-label{font-size:11px;color:var(--muted)}.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.day{border:1px solid var(--border);border-radius:12px;background:var(--panel);padding:12px 5px;text-align:center;color:var(--text)}.day.selected{background:light-dark(#eee9ff,#2b2444);border-color:var(--purple)}.dow{font-size:10px;color:var(--muted);font-weight:800}.date{display:grid;place-items:center;margin:8px auto;width:30px;height:30px;border-radius:9px;font-weight:800}.day.selected .date{background:var(--purple2);color:white}.mini{height:4px;background:var(--border);border-radius:8px;overflow:hidden}.mini span{display:block;height:100%;background:var(--green)}.content-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.8fr);gap:15px;margin-top:20px}.card{min-width:0}.card-title{margin-bottom:14px}.card-title h3{font-size:14px;margin:0}.card-title span{font-size:10px;color:var(--muted)}.timeline{display:grid;gap:9px}.task{display:grid;grid-template-columns:58px 4px minmax(0,1fr) 20px;align-items:center;gap:10px;padding:11px;border:1px solid var(--border);border-radius:12px}.task.done{opacity:.68;background:var(--panel2)}.task.done .task-name{text-decoration:line-through;color:var(--muted)}.time{font-size:10px;color:var(--muted);font-weight:800;line-height:1.5}.colorbar{width:4px;height:38px;border-radius:5px}.task-info{min-width:0}.task-name{font-size:12px;font-weight:750;overflow-wrap:anywhere}.task-meta{font-size:10px;color:var(--muted);margin-top:5px;display:flex;gap:7px;flex-wrap:wrap}.pill{border-radius:6px;padding:3px 6px;background:light-dark(#f0edff,#302747);font-size:9px;font-weight:800}.task input{appearance:none;width:20px;height:20px;border:1.5px solid var(--border);border-radius:7px;margin:0}.task input:checked{background:var(--green);border-color:var(--green)}.task input:checked:after{content:"✓";display:grid;place-items:center;color:#102b25;font-weight:900}.empty{text-align:center;padding:25px 10px;color:var(--muted);font-size:12px}.progress-ring{display:flex;align-items:center;gap:16px;padding:8px 0 17px}.ring{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--purple) var(--progress,0%),var(--border) 0);position:relative;flex-shrink:0}.ring:before{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--panel)}.ring span{position:relative;font-weight:850}.progress-copy strong{font-size:13px}.progress-copy p,.break-box p{font-size:11px;color:var(--muted);line-height:1.5}.divider{border:0;border-top:1px solid var(--border);margin:5px 0 15px}.break-box{padding:12px;border-radius:12px;background:light-dark(#fff5e8,#34281f);font-size:12px}.break-box p{margin-bottom:0}.timer{margin-top:14px;flex-wrap:wrap}.timer-value{font-size:23px;font-weight:850}.focus-settings{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px;font-size:10px;color:var(--muted)}.focus-settings input{width:65px;padding:6px;border:1px solid var(--border);border-radius:7px;background:var(--panel2);color:var(--text)}.timer button{border:0;border-radius:8px;background:var(--panel2);color:var(--text);padding:9px 11px;font-size:11px;font-weight:800}.tip{margin-top:14px;border:1px dashed var(--border);padding:12px;border-radius:12px;color:var(--muted);font-size:11px;line-height:1.6}.tip b{color:var(--text)}.modal-backdrop{position:fixed;inset:0;background:#09091499;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal-backdrop.open{display:flex}.modal{width:min(440px,100%);background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px}.modal h2{font-size:19px;margin:0 0 17px}.field{display:grid;gap:6px;margin-bottom:13px}.field label{font-size:11px;color:var(--muted);font-weight:750}.field input,.field select{width:100%;padding:10px;border:1px solid var(--border);border-radius:9px;background:var(--panel2);color:var(--text);font-size:12px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:var(--text);color:var(--bg);padding:11px 16px;border-radius:12px;font-size:12px;font-weight:750;transition:.2s;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1000px){.layout{grid-template-columns:68px minmax(0,1fr)}aside{padding:22px 8px}.brand{font-size:0;padding:0}.brand .brand-name,.eyebrow,.nav-label,.side-bottom{display:none}.nav button{text-align:center;padding:12px 3px}.hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(4,1fr)}.content-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.layout{display:block}aside{display:none}main{padding:20px 12px}.topbar{align-items:flex-start}.top-actions .icon-btn{display:none}.welcome{padding:19px}.stats{grid-template-columns:repeat(2,1fr)}.week{gap:4px}.day{padding:9px 2px}.dow{font-size:9px}.date{width:26px;height:26px}.week-label{display:none}.content-grid{gap:12px}.card{padding:13px}.task{grid-template-columns:46px 4px minmax(0,1fr) 20px;gap:7px;padding:9px}.form-row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<div class="app">
 <div class="layout">
 <aside>
-  <div class="brand"><div class="logo">✦</div><span class="brand-name">studyquest</span></div>
+  <div class="brand"><span class="logo">✦</span><span class="brand-name">studyquest</span></div>
   <div class="eyebrow">MENU PRINCIPAL</div>
   <nav class="nav">
-    <button class="active" data-nav="planner"><span class="ico">▦</span><span class="nav-label">Planner semanal</span></button>
-    <button data-nav="missoes"><span class="ico">☑</span><span class="nav-label">Minhas missões</span></button>
-    <button data-nav="progresso"><span class="ico">◒</span><span class="nav-label">Meu progresso</span></button>
+    <button class="active" data-nav="planner">▦ <span class="nav-label">Planner semanal</span></button>
+    <button data-nav="missoes">☑ <span class="nav-label">Minhas missões</span></button>
+    <button data-nav="progresso">◒ <span class="nav-label">Meu progresso</span></button>
   </nav>
   <div class="eyebrow">SUA JORNADA</div>
-  <nav class="nav">
-    <button id="timerNav"><span class="ico">◷</span><span class="nav-label">Foco & descanso</span></button>
-  </nav>
+  <nav class="nav"><button id="timerNav">◷ <span class="nav-label">Foco & descanso</span></button></nav>
   <div class="side-bottom"><strong>💜 Um passo de cada vez</strong><p>Consistência vale mais do que estudar tudo de uma vez. Faça a próxima missão.</p><button class="btn" id="addSide" style="width:100%">＋ Nova missão</button></div>
 </aside>
 <main>
-  <header class="topbar">
-    <div class="greeting"><small id="todayLine">SEU ESPAÇO DE ESTUDOS</small><h1>Seu plano, seu ritmo. <span>✦</span></h1></div>
-    <div class="top-actions"><button class="icon-btn" id="todayBtn">Hoje</button><button class="btn primary" id="addBtn">＋ Nova missão</button></div>
-  </header>
-  <section class="hero">
-    <div class="welcome">
-      <span class="tag">✦ SUA JORNADA DE APRENDIZADO</span>
-      <h2>Pequenas missões.<br>Grandes conquistas.</h2>
-      <p>Organize seus horários, conclua uma missão por vez e construa uma rotina que funciona para você.</p>
-      <div class="xp-row"><div class="xp-track"><div class="xp-fill" id="xpFill"></div></div><span class="xp-label" id="xpLabel">42 / 100 XP para o próximo nível</span></div>
-    </div>
-    <div class="stats">
-      <div class="stat"><div class="stat-head">Missões concluídas <span class="stat-icon">✓</span></div><strong id="doneStat">0 <span>/ 0</span></strong></div>
-      <div class="stat"><div class="stat-head">Tempo planejado <span class="stat-icon">◷</span></div><strong id="timeStat">0 <span>min</span></strong></div>
-      <div class="stat"><div class="stat-head">Sequência de foco <span class="stat-icon">🔥</span></div><strong>1 <span>dia</span></strong></div>
-      <div class="stat"><div class="stat-head">XP conquistado <span class="stat-icon">✦</span></div><strong id="xpStat">0 <span>XP</span></strong></div>
-    </div>
-  </section>
-  <section>
-    <div class="section-head"><div><h2>Seu planner semanal</h2><p>Escolha um dia para ver e concluir suas missões.</p></div><div class="week-switch"><button id="prevWeek" aria-label="Semana anterior">‹</button><span class="week-label" id="weekLabel">Esta semana</span><button id="nextWeek" aria-label="Próxima semana">›</button></div></div>
-    <div class="week" id="week"></div>
-  </section>
-  <section class="content-grid" id="plannerContent">
-    <div class="card" id="missionCard"><div class="card-title"><h3 id="dayTitle">Missões de hoje</h3><span id="missionCount">0 missões</span></div><div class="timeline" id="timeline"></div></div>
-    <div class="card" id="progressCard">
-      <div class="card-title"><h3>Resumo do dia</h3><span>ATUALIZADO AO VIVO</span></div>
-      <div class="progress-ring"><div class="ring" id="ring" style="--progress:0%"><span id="ringText">0%</span></div><div class="progress-copy"><strong id="progressHeadline">Vamos começar!</strong><p id="progressText">Conclua sua primeira missão para ver seu progresso.</p></div></div>
-      <hr class="divider">
-      <div class="break-box"><div class="break-icon">☕</div><div><strong>Não esqueça de pausar</strong><p>Intervalos curtos ajudam a manter o foco. Planeje 5–10 min entre sessões.</p></div></div>
-      <div class="timer"><div><div style="font-size:10px;color:var(--muted);margin-bottom:3px">TIMER DE FOCO</div><div class="timer-value" id="timerValue">25:00</div><div class="focus-settings"><label for="focusMinutes">Foco (minutos)</label><input id="focusMinutes" type="number" min="1" max="180" step="1" value="25"><button id="applyFocus">Definir</button></div></div><div style="display:flex;gap:6px"><button id="timerMode">Descanso 5m</button><button id="timerStart">▶ Iniciar</button></div></div>
-      <div class="tip"><b>💡 Dica de hoje</b><br>Defina uma tarefa específica para cada bloco. Por exemplo: “resolver 5 exercícios” em vez de apenas “estudar matemática”.</div>
-    </div>
-  </section>
-</main>
-</div>
-</div>
+<header class="topbar"><div class="greeting"><small id="todayLine">SEU ESPAÇO DE ESTUDOS</small><h1>Seu plano, seu ritmo. ✦</h1></div><div class="top-actions"><button class="icon-btn" id="todayBtn">Hoje</button><button class="btn primary" id="addBtn">＋ Nova missão</button></div></header>
+<section class="hero">
+<div class="welcome"><span class="tag">✦ SUA JORNADA DE APRENDIZADO</span><h2>Pequenas missões.<br>Grandes conquistas.</h2><p>Organize seus horários, conclua uma missão por vez e construa uma rotina que funciona para você.</p><div class="xp-row"><div class="xp-track"><div class="xp-fill" id="xpFill"></div></div><span class="xp-label" id="xpLabel">42 / 100 XP para o próximo nível</span></div></div>
+<div class="stats">
+<div class="stat"><div class="stat-head">Missões concluídas ✓</div><strong id="doneStat">0 <span>/ 0</span></strong></div>
+<div class="stat"><div class="stat-head">Tempo planejado ◷</div><strong id="timeStat">0 <span>min</span></strong></div>
+<div class="stat"><div class="stat-head">Sequência de foco 🔥</div><strong>1 <span>dia</span></strong></div>
+<div class="stat"><div class="stat-head">XP conquistado ✦</div><strong id="xpStat">0 <span>XP</span></strong></div>
+</div></section>
+<section><div class="section-head"><div><h2>Seu planner semanal</h2><p>Escolha um dia para ver e concluir suas missões.</p></div><div class="week-switch"><button id="prevWeek" aria-label="Semana anterior">‹</button><span class="week-label" id="weekLabel">Esta semana</span><button id="nextWeek" aria-label="Próxima semana">›</button></div></div><div class="week" id="week"></div></section>
+<section class="content-grid" id="plannerContent">
+<div class="card" id="missionCard"><div class="card-title"><h3 id="dayTitle">Missões de hoje</h3><span id="missionCount">0 missões</span></div><div class="timeline" id="timeline"></div></div>
+<div class="card" id="progressCard"><div class="card-title"><h3>Resumo do dia</h3><span>ATUALIZADO AO VIVO</span></div><div class="progress-ring"><div class="ring" id="ring" style="--progress:0%"><span id="ringText">0%</span></div><div class="progress-copy"><strong id="progressHeadline">Vamos começar!</strong><p id="progressText">Conclua sua primeira missão para ver seu progresso.</p></div></div><hr class="divider"><div class="break-box"><strong>☕ Não esqueça de pausar</strong><p>Intervalos curtos ajudam a manter o foco. Planeje 5–10 min entre sessões.</p></div><div class="timer"><div><div style="font-size:10px;color:var(--muted);margin-bottom:3px">TIMER DE FOCO</div><div class="timer-value" id="timerValue">25:00</div><div class="focus-settings"><label for="focusMinutes">Foco (minutos)</label><input id="focusMinutes" type="number" min="1" max="180" step="1" value="25"><button id="applyFocus">Definir</button></div></div><div style="display:flex;gap:6px"><button id="timerMode">Descanso 5m</button><button id="timerStart">▶ Iniciar</button></div></div><div class="tip"><b>💡 Dica de hoje</b><br>Defina uma tarefa específica para cada bloco. Por exemplo: “resolver 5 exercícios” em vez de apenas “estudar matemática”.</div></div>
+</section>
+</main></div>
 <div class="modal-backdrop" id="modalBackdrop"><form class="modal" id="taskForm"><h2>＋ Criar uma missão</h2>
-  <div class="field"><label for="taskName">O que você vai fazer?</label><input id="taskName" required maxlength="90" placeholder="Ex.: Estudar desenvolvimento de software"></div>
-  <div class="form-row"><div class="field"><label for="taskDay">Dia da semana</label><select id="taskDay"></select></div><div class="field"><label for="taskCategory">Categoria</label><select id="taskCategory"><option>Desenvolvimento</option><option>Faculdade</option><option>Revisão</option><option>Descanso</option><option>Projeto pessoal</option><option>Outra</option></select></div></div>
-  <div class="form-row"><div class="field"><label for="taskStart">Início</label><input id="taskStart" type="time" value="08:00" required></div><div class="field"><label for="taskEnd">Fim</label><input id="taskEnd" type="time" value="09:00" required></div></div>
-  <div class="field"><label for="taskNote">Objetivo da sessão (opcional)</label><input id="taskNote" maxlength="120" placeholder="Ex.: revisar anotações e fazer 3 exercícios"></div>
-  <div class="modal-actions"><button type="button" class="btn" id="cancelModal">Cancelar</button><button type="submit" class="btn primary">Salvar missão</button></div>
-</form></div>
-<div class="toast" id="toast">Missão concluída! +10 XP ✨</div>
+<div class="field"><label for="taskName">O que você vai fazer?</label><input id="taskName" required maxlength="90" placeholder="Ex.: Estudar desenvolvimento de software"></div>
+<div class="form-row"><div class="field"><label for="taskDay">Dia da semana</label><select id="taskDay"></select></div><div class="field"><label for="taskCategory">Categoria</label><select id="taskCategory"><option>Desenvolvimento</option><option>Faculdade</option><option>Revisão</option><option>Descanso</option><option>Projeto pessoal</option><option>Outra</option></select></div></div>
+<div class="form-row"><div class="field"><label for="taskStart">Início</label><input id="taskStart" type="time" value="08:00" required></div><div class="field"><label for="taskEnd">Fim</label><input id="taskEnd" type="time" value="09:00" required></div></div>
+<div class="field"><label for="taskNote">Objetivo da sessão (opcional)</label><input id="taskNote" maxlength="120" placeholder="Ex.: revisar anotações e fazer 3 exercícios"></div>
+<div class="modal-actions"><button type="button" class="btn" id="cancelModal">Cancelar</button><button type="submit" class="btn primary">Salvar missão</button></div>
+</form></div><div class="toast" id="toast" role="status"></div>
 <script>
+'use strict';
 const dayNames=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
 const shortDays=['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];
 const colors={'Desenvolvimento':'#8b6cff','Faculdade':'#69a8ff','Revisão':'#35c99a','Descanso':'#ffb66b','Projeto pessoal':'#f18cc8','Outra':'#9ca3af'};
-const now=new Date(); let weekOffset=0; let selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-let tasks=[
- {id:1,day:1,start:'08:00',end:'09:00',name:'Desenvolvimento de Software',category:'Desenvolvimento',note:'Revisar conceitos e fazer anotações',done:false},
- {id:2,day:1,start:'09:00',end:'09:10',name:'Pausa para descansar',category:'Descanso',note:'Levantar, beber água e alongar',done:false},
- {id:3,day:1,start:'09:10',end:'10:00',name:'Lógica de Programação',category:'Faculdade',note:'Resolver exercícios práticos',done:false},
- {id:4,day:1,start:'10:00',end:'10:10',name:'Intervalo',category:'Descanso',note:'Descanso longe da tela',done:false},
- {id:5,day:1,start:'10:10',end:'11:00',name:'Praticar JavaScript',category:'Projeto pessoal',note:'Aplicar o conteúdo em um projeto',done:false},
- {id:6,day:2,start:'08:00',end:'09:00',name:'Banco de Dados',category:'Faculdade',note:'Revisar SQL e modelagem',done:false},
- {id:7,day:2,start:'09:00',end:'09:10',name:'Pausa para descansar',category:'Descanso',note:'Água e alongamento',done:false},
- {id:8,day:3,start:'08:00',end:'09:00',name:'Desenvolvimento de Software',category:'Desenvolvimento',note:'Estudar um conceito novo',done:false},
- {id:9,day:4,start:'08:00',end:'09:00',name:'Revisão semanal',category:'Revisão',note:'Rever o que aprendeu',done:false},
- {id:10,day:5,start:'08:00',end:'09:00',name:'Projeto prático',category:'Projeto pessoal',note:'Construir algo para o portfólio',done:false}
+const STORAGE_KEY='studyquest-data-v1';
+const now=new Date();
+let weekOffset=0;
+let selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+const defaultTasks=[
+{id:1,day:1,start:'08:00',end:'09:00',name:'Desenvolvimento de Software',category:'Desenvolvimento',note:'Revisar conceitos e fazer anotações',done:false},
+{id:2,day:1,start:'09:00',end:'09:10',name:'Pausa para descansar',category:'Descanso',note:'Levantar, beber água e alongar',done:false},
+{id:3,day:1,start:'09:10',end:'10:00',name:'Lógica de Programação',category:'Faculdade',note:'Resolver exercícios práticos',done:false},
+{id:4,day:1,start:'10:00',end:'10:10',name:'Intervalo',category:'Descanso',note:'Descanso longe da tela',done:false},
+{id:5,day:1,start:'10:10',end:'11:00',name:'Praticar JavaScript',category:'Projeto pessoal',note:'Aplicar o conteúdo em um projeto'},
+{id:6,day:2,start:'08:00',end:'09:00',name:'Banco de Dados',category:'Faculdade',note:'Revisar SQL e modelagem',done:false},
+{id:7,day:2,start:'09:00',end:'09:10',name:'Pausa para descansar',category:'Descanso',note:'Água e alongamento',done:false},
+{id:8,day:3,start:'08:00',end:'09:00',name:'Desenvolvimento de Software',category:'Desenvolvimento',note:'Estudar um conceito novo',done:false},
+{id:9,day:4,start:'08:00',end:'09:00',name:'Revisão semanal',category:'Revisão',note:'Rever o que aprendeu',done:false},
+{id:10,day:5,start:'08:00',end:'09:00',name:'Projeto prático',category:'Projeto pessoal',note:'Construir algo para o portfólio',done:false}
 ];
-let nextId=11, xp=42, focusMinutes=25, timerSeconds=1500, timerRunning=false, timerInterval=null, timerIsBreak=false;
+let tasks=defaultTasks.map(t=>({...t,done:false}));
+let nextId=11,xp=42,focusMinutes=25,timerSeconds=1500,timerRunning=false,timerInterval=null,timerIsBreak=false;
 const $=id=>document.getElementById(id);
+function saveProgress(){
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify({tasks,nextId,xp}));}
+ catch(error){console.error('Não foi possível salvar o progresso:',error);showToast('Não foi possível salvar. Verifique o armazenamento do navegador.');}
+}
+function loadProgress(){
+ try{
+  const raw=localStorage.getItem(STORAGE_KEY);
+  if(!raw)return;
+  const data=JSON.parse(raw);
+  if(!data||!Array.isArray(data.tasks)||!Number.isFinite(data.xp))return;
+  tasks=data.tasks.filter(t=>t&&Number.isInteger(Number(t.id))&&Number.isInteger(Number(t.day))&&Number(t.day)>=0&&Number(t.day)<=6&&typeof t.name==='string'&&typeof t.start==='string'&&typeof t.end==='string').map(t=>({...t,id:Number(t.id),day:Number(t.day),done:t.done===true,category:typeof t.category==='string'?t.category:'Outra',note:typeof t.note==='string'?t.note:''}));
+  nextId=Number.isInteger(data.nextId)&&data.nextId>0?data.nextId:Math.max(10,...tasks.map(t=>t.id))+1;
+  xp=Math.max(42,Math.floor(data.xp));
+ }catch(error){console.error('Erro ao carregar o progresso salvo:',error);}
+}
 function dateKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function startOfWeek(d){const x=new Date(d);x.setDate(x.getDate()-((x.getDay()+6)%7));x.setHours(0,0,0,0);return x}
 function activeDay(){return selectedDate.getDay()}
 function minutesBetween(a,b){const [ah,am]=a.split(':').map(Number),[bh,bm]=b.split(':').map(Number);return Math.max(0,(bh*60+bm)-(ah*60+am))}
 function fmtDate(d){return d.toLocaleDateString('pt-BR',{day:'numeric',month:'short'})}
-function renderWeek(){const base=startOfWeek(new Date(now.getFullYear(),now.getMonth(),now.getDate()));base.setDate(base.getDate()+weekOffset*7);$('week').innerHTML='';$('weekLabel').textContent=weekOffset===0?'Esta semana':weekOffset===-1?'Semana anterior':weekOffset===1?'Próxima semana':`${fmtDate(base)} – ${fmtDate(new Date(base.getTime()+6*86400000))}`;
- for(let i=0;i<7;i++){const d=new Date(base);d.setDate(base.getDate()+i);const count=tasks.filter(t=>t.day===d.getDay()).length;const done=tasks.filter(t=>t.day===d.getDay()&&t.done).length;const el=document.createElement('button');el.className='day'+(dateKey(d)===dateKey(selectedDate)?' selected':'');el.innerHTML=`<div class="dow">${shortDays[d.getDay()]}</div><div class="date">${d.getDate()}</div><div class="mini"><span style="width:${count?done/count*100:0}%"></span></div>`;el.title=dayNames[d.getDay()];el.onclick=()=>{selectedDate=new Date(d);renderAll()};$('week').appendChild(el)}
+function renderWeek(){
+ const base=startOfWeek(new Date(now.getFullYear(),now.getMonth(),now.getDate()));base.setDate(base.getDate()+weekOffset*7);
+ $('week').innerHTML='';
+ $('weekLabel').textContent=weekOffset===0?'Esta semana':weekOffset===-1?'Semana anterior':weekOffset===1?'Próxima semana':`${fmtDate(base)} – ${fmtDate(new Date(base.getTime()+6*86400000))}`;
+ for(let i=0;i<7;i++){
+  const d=new Date(base);d.setDate(base.getDate()+i);
+  const dayTasks=tasks.filter(t=>t.day===d.getDay()),count=dayTasks.length,done=dayTasks.filter(t=>t.done).length;
+  const el=document.createElement('button');el.className='day'+(dateKey(d)===dateKey(selectedDate)?' selected':'');
+  el.innerHTML=`<div class="dow">${shortDays[d.getDay()]}</div><div class="date">${d.getDate()}</div><div class="mini"><span style="width:${count?done/count*100:0}%"></span></div>`;
+  el.title=dayNames[d.getDay()];el.onclick=()=>{selectedDate=new Date(d);renderAll()};$('week').appendChild(el);
+ }
 }
-function renderTasks(){const list=tasks.filter(t=>t.day===activeDay()).sort((a,b)=>a.start.localeCompare(b.start));$('dayTitle').textContent=`Missões de ${dateKey(selectedDate)===dateKey(new Date(now.getFullYear(),now.getMonth(),now.getDate()))?'hoje':dayNames[activeDay()].toLowerCase()}`;$('missionCount').textContent=`${list.length} ${list.length===1?'missão':'missões'}`;$('timeline').innerHTML='';
- if(!list.length){$('timeline').innerHTML='<div class="empty">Nenhuma missão neste dia ainda.<br>Use “Nova missão” para planejar sua primeira sessão. ✨</div>'}
- list.forEach(t=>{const el=document.createElement('div');el.className='task'+(t.done?' done':'');const duration=minutesBetween(t.start,t.end);el.innerHTML=`<div class="time">${t.start}<br>↓ ${t.end}</div><div class="colorbar" style="background:${colors[t.category]||colors.Outra}"></div><div class="task-info"><div class="task-name">${escapeHtml(t.name)}</div><div class="task-meta"><span>${duration} min</span><span class="pill" style="color:${colors[t.category]||colors.Outra}">${escapeHtml(t.category)}</span>${t.note?`<span>${escapeHtml(t.note)}</span>`:''}</div></div><input type="checkbox" aria-label="Marcar ${escapeHtml(t.name)} como concluída" ${t.done?'checked':''}></input>`;el.querySelector('input').addEventListener('change',e=>{t.done=e.target.checked;if(t.done){xp+=10;showToast('Missão concluída! +10 XP ✨')}renderAll()});$('timeline').appendChild(el)});
- const total=list.length,done=list.filter(t=>t.done).length,pct=total?Math.round(done/total*100):0;const mins=list.reduce((s,t)=>s+minutesBetween(t.start,t.end),0);$('ring').style.setProperty('--progress',pct+'%');$('ringText').textContent=pct+'%';$('progressHeadline').textContent=total?(pct===100?'Dia concluído! 🎉':`${total-done} missão${total-done===1?'':'ões'} pela frente`):'Vamos começar!';$('progressText').textContent=total?`${done} de ${total} missões concluídas. Continue no seu ritmo.`:'Adicione uma missão para começar a organizar seu dia.';$('doneStat').innerHTML=`${done} <span>/ ${total}</span>`;$('timeStat').innerHTML=`${mins} <span>min</span>`;$('xpStat').innerHTML=`${xp-42} <span>XP</span>`;const progress=xp%100;$('xpFill').style.width=progress+'%';$('xpLabel').textContent=`${progress} / 100 XP para o próximo nível`;
+function renderTasks(){
+ const list=tasks.filter(t=>t.day===activeDay()).sort((a,b)=>a.start.localeCompare(b.start));
+ $('dayTitle').textContent=`Missões de ${dateKey(selectedDate)===dateKey(new Date(now.getFullYear(),now.getMonth(),now.getDate()))?'hoje':dayNames[activeDay()].toLowerCase()}`;
+ $('missionCount').textContent=`${list.length} ${list.length===1?'missão':'missões'}`;$('timeline').innerHTML='';
+ if(!list.length)$('timeline').innerHTML='<div class="empty">Nenhuma missão neste dia ainda.<br>Use “Nova missão” para planejar sua primeira sessão. ✨</div>';
+ list.forEach(t=>{
+  const el=document.createElement('div');el.className='task'+(t.done?' done':'');const duration=minutesBetween(t.start,t.end);
+  el.innerHTML=`<div class="time">${t.start}<br>↓ ${t.end}</div><div class="colorbar" style="background:${colors[t.category]||colors.Outra}"></div><div class="task-info"><div class="task-name">${escapeHtml(t.name)}</div><div class="task-meta"><span>${duration} min</span><span class="pill" style="color:${colors[t.category]||colors.Outra}">${escapeHtml(t.category)}</span>${t.note?`<span>${escapeHtml(t.note)}</span>`:''}</div></div><input type="checkbox" aria-label="Marcar ${escapeHtml(t.name)} como concluída" ${t.done?'checked':''}>`;
+  el.querySelector('input').addEventListener('change',e=>{
+   const wasDone=t.done;t.done=e.target.checked;
+   if(t.done&&!wasDone){xp+=10;showToast('Missão concluída! +10 XP ✨');}
+   else if(!t.done&&wasDone){xp=Math.max(42,xp-10);showToast('Missão reaberta. 10 XP removidos.');}
+   saveProgress();renderAll();
+  });
+  $('timeline').appendChild(el);
+ });
+ const total=list.length,done=list.filter(t=>t.done).length,pct=total?Math.round(done/total*100):0;
+ const mins=list.reduce((s,t)=>s+minutesBetween(t.start,t.end),0);
+ $('ring').style.setProperty('--progress',pct+'%');$('ringText').textContent=pct+'%';
+ $('progressHeadline').textContent=total?(pct===100?'Dia concluído! 🎉':`${total-done} missão${total-done===1?'':'ões'} pela frente`):'Vamos começar!';
+ $('progressText').textContent=total?`${done} de ${total} missões concluídas. Continue no seu ritmo.`:'Adicione uma missão para começar a organizar seu dia.';
+ $('doneStat').innerHTML=`${done} <span>/ ${total}</span>`;$('timeStat').innerHTML=`${mins} <span>min</span>`;
+ $('xpStat').innerHTML=`${xp-42} <span>XP</span>`;const progress=xp%100;
+ $('xpFill').style.width=progress+'%';$('xpLabel').textContent=`${progress} / 100 XP para o próximo nível`;
 }
 function renderAll(){renderWeek();renderTasks();$('todayLine').textContent=selectedDate.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}).toUpperCase()}
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function showToast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),2100)}
-function openModal(){ $('taskDay').innerHTML=dayNames.map((n,i)=>`<option value="${i}" ${i===activeDay()?'selected':''}>${n}</option>`).join('');$('modalBackdrop').classList.add('open');$('taskName').focus() }
+let toastTimeout;
+function showToast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>$('toast').classList.remove('show'),2300)}
+function openModal(){$('taskDay').innerHTML=dayNames.map((n,i)=>`<option value="${i}" ${i===activeDay()?'selected':''}>${n}</option>`).join('');$('modalBackdrop').classList.add('open');$('taskName').focus()}
 function closeModal(){$('modalBackdrop').classList.remove('open')}
-$('addBtn').onclick=openModal;$('addSide').onclick=openModal;$('cancelModal').onclick=closeModal;$('modalBackdrop').addEventListener('click',e=>{if(e.target===$('modalBackdrop'))closeModal()});
-$('taskForm').addEventListener('submit',e=>{e.preventDefault();const start=$('taskStart').value,end=$('taskEnd').value;if(end<=start){showToast('O horário final precisa ser depois do início.');return}const task={id:nextId++,day:Number($('taskDay').value),start,end,name:$('taskName').value.trim(),category:$('taskCategory').value,note:$('taskNote').value.trim(),done:false};tasks.push(task);selectedDate.setDate(selectedDate.getDate()+((task.day-selectedDate.getDay()+7)%7));closeModal();$('taskForm').reset();$('taskStart').value='08:00';$('taskEnd').value='09:00';renderAll();showToast('Missão adicionada ao seu planner!')});
-$('prevWeek').onclick=()=>{weekOffset--;selectedDate.setDate(selectedDate.getDate()-7);renderAll()};$('nextWeek').onclick=()=>{weekOffset++;selectedDate.setDate(selectedDate.getDate()+7);renderAll()};$('todayBtn').onclick=()=>{weekOffset=0;selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());renderAll()};
-$('timerMode').onclick=()=>{timerIsBreak=!timerIsBreak;timerSeconds=timerIsBreak?300:1500;updateTimer();$('timerMode').textContent=timerIsBreak?'Foco 25m':'Descanso 5m';if(timerRunning)stopTimer()};function updateTimer(){const m=Math.floor(timerSeconds/60),s=timerSeconds%60;$('timerValue').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`};function stopTimer(){clearInterval(timerInterval);timerRunning=false;$('timerStart').textContent='▶ Iniciar'};$('timerStart').onclick=()=>{if(timerRunning){stopTimer();return}timerRunning=true;$('timerStart').textContent='Ⅱ Pausar';timerInterval=setInterval(()=>{timerSeconds--;updateTimer();if(timerSeconds<=0){stopTimer();showToast(timerIsBreak?'Descanso finalizado. Hora de voltar!':'Bloco de foco finalizado! Faça uma pausa.');timerIsBreak=!timerIsBreak;timerSeconds=timerIsBreak?300:1500;$('timerMode').textContent=timerIsBreak?'Foco 25m':'Descanso 5m';updateTimer()}},1000)};$('timerNav').onclick=()=>{$('progressCard').scrollIntoView({behavior:'smooth',block:'center'});showToast('Seu timer de foco está logo abaixo do resumo do dia.')};
-document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-nav]').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.nav==='missoes'){$('missionCard').scrollIntoView({behavior:'smooth',block:'start'});showToast('Aqui estão as missões do dia selecionado.')}else if(b.dataset.nav==='progresso'){$('progressCard').scrollIntoView({behavior:'smooth',block:'start'})}else window.scrollTo({top:0,behavior:'smooth'})});
-$('applyFocus').onclick=()=>{const value=Number($('focusMinutes').value);if(!Number.isInteger(value)||value<1||value>180){showToast('Escolha de 1 a 180 minutos.');return}focusMinutes=value;if(!timerIsBreak){stopTimer();timerSeconds=focusMinutes*60;updateTimer()}$('timerMode').textContent=`Foco ${focusMinutes}m`;showToast(`Foco definido para ${focusMinutes} minutos.`)};
-$('timerMode').onclick=()=>{if(timerRunning)stopTimer();timerIsBreak=!timerIsBreak;timerSeconds=timerIsBreak?300:focusMinutes*60;updateTimer();$('timerMode').textContent=timerIsBreak?'Foco '+focusMinutes+'m':'Descanso 5m'};
-$('timerStart').onclick=()=>{if(timerRunning){stopTimer();return}timerRunning=true;$('timerStart').textContent='Ⅱ Pausar';timerInterval=setInterval(()=>{timerSeconds--;updateTimer();if(timerSeconds<=0){stopTimer();showToast(timerIsBreak?'Descanso finalizado. Hora de voltar!':'Bloco de foco finalizado! Faça uma pausa.');timerIsBreak=!timerIsBreak;timerSeconds=timerIsBreak?300:focusMinutes*60;$('timerMode').textContent=timerIsBreak?'Foco '+focusMinutes+'m':'Descanso 5m';updateTimer()}},1000)};
+$('addBtn').onclick=openModal;$('addSide').onclick=openModal;$('cancelModal').onclick=closeModal;
+$('modalBackdrop').addEventListener('click',e=>{if(e.target===$('modalBackdrop'))closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+$('taskForm').addEventListener('submit',e=>{
+ e.preventDefault();const start=$('taskStart').value,end=$('taskEnd').value;
+ if(end<=start){showToast('O horário final precisa ser depois do início.');return}
+ const task={id:nextId++,day:Number($('taskDay').value),start,end,name:$('taskName').value.trim(),category:$('taskCategory').value,note:$('taskNote').value.trim(),done:false};
+ if(!task.name){showToast('Digite o nome da missão.');return}
+ tasks.push(task);saveProgress();
+ const delta=(task.day-selectedDate.getDay()+7)%7;selectedDate.setDate(selectedDate.getDate()+delta);
+ const base=startOfWeek(new Date(now.getFullYear(),now.getMonth(),now.getDate()));
+ const selectedWeek=startOfWeek(selectedDate);weekOffset=Math.round((selectedWeek-base)/604800000);
+ closeModal();$('taskForm').reset();$('taskStart').value='08:00';$('taskEnd').value='09:00';renderAll();showToast('Missão adicionada ao seu planner!');
+});
+$('prevWeek').onclick=()=>{weekOffset--;selectedDate.setDate(selectedDate.getDate()-7);renderAll()};
+$('nextWeek').onclick=()=>{weekOffset++;selectedDate.setDate(selectedDate.getDate()+7);renderAll()};
+$('todayBtn').onclick=()=>{weekOffset=0;selectedDate=new Date(now.getFullYear(),now.getMonth(),now.getDate());renderAll()};
+$('timerNav').onclick=()=>{$('progressCard').scrollIntoView({behavior:'smooth',block:'center'});showToast('Seu timer de foco está logo abaixo do resumo do dia.')};
+function updateTimer(){const m=Math.floor(timerSeconds/60),s=timerSeconds%60;$('timerValue').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+function stopTimer(){clearInterval(timerInterval);timerInterval=null;timerRunning=false;$('timerStart').textContent='▶ Iniciar'}
+$('timerMode').onclick=()=>{if(timerRunning)stopTimer();timerIsBreak=!timerIsBreak;timerSeconds=timerIsBreak?300:focusMinutes*60;updateTimer();$('timerMode').textContent=timerIsBreak?`Foco ${focusMinutes}m`:'Descanso 5m'};
+$('timerStart').onclick=()=>{if(timerRunning){stopTimer();return}timerRunning=true;$('timerStart').textContent='Ⅱ Pausar';timerInterval=setInterval(()=>{timerSeconds--;updateTimer();if(timerSeconds<=0){stopTimer();showToast(timerIsBreak?'Descanso finalizado. Hora de voltar!':'Bloco de foco finalizado! Faça uma pausa.');timerIsBreak=!timerIsBreak;timerSeconds=timerIsBreak?300:focusMinutes*60;$('timerMode').textContent=timerIsBreak?`Foco ${focusMinutes}m`:'Descanso 5m';updateTimer()}},1000)};
+$('applyFocus').onclick=()=>{const value=Number($('focusMinutes').value);if(!Number.isInteger(value)||value<1||value>180){showToast('Escolha de 1 a 180 minutos.');return}focusMinutes=value;if(!timerIsBreak){stopTimer();timerSeconds=focusMinutes*60;updateTimer()}$('timerMode').textContent=timerIsBreak?`Foco ${focusMinutes}m`:'Descanso 5m';showToast(`Foco definido para ${focusMinutes} minutos.`)};
+document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-nav]').forEach(x=>x.classList.remove('active'));b.classList.add('active');if(b.dataset.nav==='missoes')$('missionCard').scrollIntoView({behavior:'smooth',block:'start'});else if(b.dataset.nav==='progresso')$('progressCard').scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'})});
+loadProgress();
 renderAll();
 </script>
 </body>
